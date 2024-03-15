@@ -193,21 +193,22 @@ for msg in st.session_state.messages:
 if prompt := st.chat_input(placeholder=starter_message):
     st.chat_message("user", avatar=user_image).write(prompt)
     with st.chat_message("assistant", avatar=avatar_image):
-        st_callback = StreamlitCallbackHandler(st.container())
-        response = agent_executor(
-            {"input": prompt, "history": st.session_state.messages},
-            #callbacks=[st_callback],
-            include_run_info=True,
-        )
-        st.session_state.messages.append(AIMessage(content=response["output"]))
-        st.write_stream(stream_data(response["output"]))
-        if os.path.exists('graph.png'):  
-            st.image("graph.png")   
-        memory.save_context({"input": prompt}, response)
-        if os.path.exists('graph.png'):
-            os.remove('graph.png')
-        st.session_state["messages"] = memory.buffer
-        run_id = response["__run"].run_id
+        with st.spinner("Thinking..."):
+            st_callback = StreamlitCallbackHandler(st.container())
+            response = agent_executor(
+                {"input": prompt, "history": st.session_state.messages},
+                #callbacks=[st_callback],
+                include_run_info=True,
+            )
+            st.session_state.messages.append(AIMessage(content=response["output"]))
+            st.write_stream(stream_data(response["output"]))
+            if os.path.exists('graph.png'):  
+                st.image("graph.png")   
+            memory.save_context({"input": prompt}, response)
+            if os.path.exists('graph.png'):
+                os.remove('graph.png')
+            st.session_state["messages"] = memory.buffer
+            run_id = response["__run"].run_id
         
         
         
