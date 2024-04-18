@@ -60,11 +60,11 @@ container_name = "logdata"
 container_client = blob_service_client.get_container_client(container_name)
 
 # Access the blob
-blob_name = "Logs.csv"
+blob_name = "dbo.Logs.csv"
 blob_client = container_client.get_blob_client(blob_name)
 
 # Download the blob to a local file
-with open("Logs.csv", "wb") as download_file:
+with open("dbo.Logs.csv", "wb") as download_file:
     download_file.write(blob_client.download_blob().readall())
 
 llm = ChatOpenAI(temperature=0, model="gpt-4", streaming=True)
@@ -132,7 +132,7 @@ prompt = ChatPromptTemplate.from_messages(
  PythonREPLTool: Use this to plot a graph or a chart. First you rephrase the user input so that a Python code generator can understand it.
             You have access to python REPL, which you can use to execute python code.
                      Skip bad lines, blank lines while reading the file if any.
-            Generate python code to answer the user input based on the Logs.csv file which has the columns: 
+            Generate python code to answer the user input based on the dbo.Logs.csv file which has the columns: 
             
                     GUID - a unique ID for all the rows
                     TimeStamp - this column is in the UTC format, always do the necessary datetime conversion when required
