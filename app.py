@@ -36,7 +36,7 @@ CONN_STR = os.getenv("BLOB_CONN_STRING")
 # os.environ["SQL_SERVER_DATABASE"] = os.getenv("SQL_SERVER_DATABASE")
 
 SQL_SERVER_USERNAME = "sqlserver"
-SQL_SERVER_ENDPOINT = "magictssqlserver" 
+SQL_SERVER_ENDPOINT = "chatbotserver456" 
 SQL_SERVER_PASSWORD = "chatbot@123" 
 SQL_SERVER_DATABASE = "chatdb"
 
@@ -151,7 +151,7 @@ prompt = ChatPromptTemplate.from_messages(
  --------
  
  """),
-                    MessagesPlaceholder("chat_history", optional=True),
+                    MessagesPlaceholder("history", optional=True),
                     ("human", "{input}"),
                     MessagesPlaceholder("agent_scratchpad"),
                 ]
